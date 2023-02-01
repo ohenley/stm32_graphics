@@ -177,12 +177,8 @@ package body LCD_Std_Out is
          Start      => (X, Y),
          Char       => Msg,
          Font       => Current_Font,
-         Foreground =>
-           HAL.Bitmap.Bitmap_Color_To_Word (Display.Get_Color_Mode (1),
-                                            Current_Text_Color),
-         Background =>
-           HAL.Bitmap.Bitmap_Color_To_Word (Display.Get_Color_Mode (1),
-                                            Current_Background_Color));
+         Foreground => Current_Text_Color,
+         Background => Current_Background_Color);
    end Draw_Char;
 
    ---------

@@ -37,7 +37,7 @@ package body Bitmapped_Drawing is
 
    procedure Draw_Char
      (Buffer : Bitmap_Buffer'Class; Start : Point; Char : Character;
-      Font   : BMP_Font; Foreground : BT.UInt32; Background : BT.UInt32)
+      Font   : BMP_Font; Foreground : Bitmap_Color; Background : Bitmap_Color)
    is
       use BT;
    begin
@@ -61,16 +61,16 @@ package body Bitmapped_Drawing is
       Font   : BMP_Font; Foreground : Bitmap_Color; Background : Bitmap_Color)
    is
       Count : Natural            := 0;
-      FG    : constant BT.UInt32 :=
-        Bitmap_Color_To_Word (Buffer.Color_Mode, Foreground);
-      BG    : constant BT.UInt32 :=
-        Bitmap_Color_To_Word (Buffer.Color_Mode, Background);
+      --  FG    : constant BT.UInt32 :=
+      --    Bitmap_Color_To_Word (Buffer.Color_Mode, Foreground);
+      --  BG    : constant BT.UInt32 :=
+      --    Bitmap_Color_To_Word (Buffer.Color_Mode, Background);
    begin
       for C of Msg loop
          exit when Start.X + Count * Char_Width (Font) > Buffer.Width;
          Draw_Char
            (Buffer, (Start.X + Count * Char_Width (Font), Start.Y), C, Font,
-            FG, BG);
+            Foreground, Background);
          Count := Count + 1;
       end loop;
    end Draw_String;
@@ -84,8 +84,8 @@ package body Bitmapped_Drawing is
       Font       : Hershey_Font; Height : Natural; Bold : Boolean;
       Foreground : Bitmap_Color; Fast : Boolean := True)
    is
-      FG : constant BT.UInt32 :=
-        Bitmap_Color_To_Word (Buffer.Color_Mode, Foreground);
+      --  FG : constant BT.UInt32 :=
+      --    Bitmap_Color_To_Word (Buffer.Color_Mode, Foreground);
 
       procedure Internal_Draw_Line
         (X0, Y0, X1, Y1 : Natural; Width : Positive);
@@ -93,7 +93,7 @@ package body Bitmapped_Drawing is
       procedure Internal_Draw_Line (X0, Y0, X1, Y1 : Natural; Width : Positive)
       is
       begin
-         Draw_Line (Buffer, (X0, Y0), (X1, Y1), FG, Width, Fast => Fast);
+         Draw_Line (Buffer, (X0, Y0), (X1, Y1), Foreground, Width, Fast => Fast);
       end Internal_Draw_Line;
 
       procedure Draw_Glyph is new Hershey_Fonts.Draw_Glyph
@@ -196,15 +196,15 @@ package body Bitmapped_Drawing is
    -- Draw_Line --
    ---------------
 
-   procedure Draw_Line
-     (Buffer    : Bitmap_Buffer'Class; Start, Stop : Point; Hue : Bitmap_Color;
-      Thickness : Natural := 1; Fast : Boolean := True)
-   is
-      Col : constant BT.UInt32 :=
-        Bitmap_Color_To_Word (Buffer.Color_Mode, Hue);
-   begin
-      Draw_Line (Buffer, Start, Stop, Col, Thickness, Fast);
-   end Draw_Line;
+   --  procedure Draw_Line
+   --    (Buffer    : Bitmap_Buffer'Class; Start, Stop : Point; Hue : Bitmap_Color;
+   --     Thickness : Natural := 1; Fast : Boolean := True)
+   --  is
+   --     --  Col : constant BT.UInt32 :=
+   --     --    Bitmap_Color_To_Word (Buffer.Color_Mode, Hue);
+   --  begin
+   --     Draw_Line (Buffer, Start, Stop, Hue, Thickness, Fast);
+   --  end Draw_Line;
 
    --  http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Ada
    ---------------
@@ -212,7 +212,7 @@ package body Bitmapped_Drawing is
    ---------------
 
    procedure Draw_Line
-     (Buffer    : Bitmap_Buffer'Class; Start, Stop : Point; Hue : BT.UInt32;
+     (Buffer    : Bitmap_Buffer'Class; Start, Stop : Point; Hue : Bitmap_Color;
       Thickness : Natural := 1; Fast : Boolean := True)
    is
       DX     : constant Float := abs Float (Stop.X - Start.X);
@@ -476,15 +476,14 @@ package body Bitmapped_Drawing is
    -- Draw_Circle --
    -----------------
 
-   procedure Draw_Circle
-     (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
-      Hue    : Bitmap_Color)
-   is
-   begin
-      Draw_Circle
-        (Buffer, Center, Radius,
-         Bitmap_Color_To_Word (Buffer.Color_Mode, Hue));
-   end Draw_Circle;
+   --  procedure Draw_Circle
+   --    (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
+   --     Hue    : Bitmap_Color)
+   --  is
+   --  begin
+   --     Draw_Circle
+   --       (Buffer, Center, Radius, Hue);
+   --  end Draw_Circle;
 
    --  http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
    -----------------
@@ -493,7 +492,7 @@ package body Bitmapped_Drawing is
 
    procedure Draw_Circle
      (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
-      Hue    : BT.UInt32)
+      Hue    : Bitmap_Color)
    is
       F     : Integer := 1 - Radius;
       ddF_X : Integer := 0;
@@ -530,19 +529,19 @@ package body Bitmapped_Drawing is
    -- Fill_Circle --
    -----------------
 
-   procedure Fill_Circle
-     (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
-      Hue    : Bitmap_Color)
-   is
-      Col : constant BT.UInt32 :=
-        Bitmap_Color_To_Word (Buffer.Color_Mode, Hue);
-   begin
-      Fill_Circle (Buffer, Center, Radius, Col);
-   end Fill_Circle;
+   --  procedure Fill_Circle
+   --    (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
+   --     Hue    : Bitmap_Color)
+   --  is
+   --     Col : constant BT.UInt32 :=
+   --       Bitmap_Color_To_Word (Buffer.Color_Mode, Hue);
+   --  begin
+   --     Fill_Circle (Buffer, Center, Radius, Col);
+   --  end Fill_Circle;
 
    procedure Fill_Circle
      (Buffer : Bitmap_Buffer'Class; Center : Point; Radius : Natural;
-      Hue    : BT.UInt32)
+      Hue    : Bitmap_Color)
    is
       procedure Draw_Horizontal_Line (X, Y : Integer; Width : Natural);
       ------------------------

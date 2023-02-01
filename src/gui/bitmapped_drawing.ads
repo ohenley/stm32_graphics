@@ -61,12 +61,12 @@ package Bitmapped_Drawing is
       Height : Natural;
    end record;
 
-   procedure Draw_Line
-     (Buffer      : Bitmap_Buffer'Class;
-      Start, Stop : Point;
-      Hue         : BT.Uint32;
-      Thickness   : Natural := 1;
-      Fast        : Boolean := True);
+  --   procedure Draw_Line
+  --     (Buffer      : Bitmap_Buffer'Class;
+  --      Start, Stop : Point;
+  --      Hue         : BT.Uint32;
+  --      Thickness   : Natural := 1;
+  --      Fast        : Boolean := True);
    procedure Draw_Line
      (Buffer      : Bitmap_Buffer'Class;
       Start, Stop : Point;
@@ -106,35 +106,43 @@ package Bitmapped_Drawing is
       N              : Positive := 20;
       Thickness      : Natural := 1);
 
-   procedure Draw_Circle
-     (Buffer : Bitmap_Buffer'Class;
-      Center : Point;
-      Radius : Natural;
-      Hue    : BT.Uint32);
+  --   procedure Draw_Circle
+  --     (Buffer : Bitmap_Buffer'Class;
+  --      Center : Point;
+  --      Radius : Natural;
+  --      Hue    : BT.Uint32);
    procedure Draw_Circle
      (Buffer : Bitmap_Buffer'Class;
       Center : Point;
       Radius : Natural;
       Hue    : Bitmap_Color);
 
-   procedure Fill_Circle
-     (Buffer : Bitmap_Buffer'Class;
-      Center : Point;
-      Radius : Natural;
-      Hue    : BT.Uint32);
+  --   procedure Fill_Circle
+  --     (Buffer : Bitmap_Buffer'Class;
+  --      Center : Point;
+  --      Radius : Natural;
+  --      Hue    : BT.Uint32);
    procedure Fill_Circle
      (Buffer : Bitmap_Buffer'Class;
       Center : Point;
       Radius : Natural;
       Hue    : Bitmap_Color);
+
+  --   procedure Draw_Char
+  --     (Buffer     : Bitmap_Buffer'Class;
+  --      Start      : Point;
+  --      Char       : Character;
+  --      Font       : BMP_Font;
+  --      Foreground : BT.Uint32;
+  --      Background : BT.Uint32);
 
    procedure Draw_Char
      (Buffer     : Bitmap_Buffer'Class;
       Start      : Point;
       Char       : Character;
       Font       : BMP_Font;
-      Foreground : BT.Uint32;
-      Background : BT.Uint32);
+      Foreground : Bitmap_Color;
+      Background : Bitmap_Color);
 
    procedure Draw_String
      (Buffer     : Bitmap_Buffer'Class;
