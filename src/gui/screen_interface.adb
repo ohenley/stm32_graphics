@@ -11,7 +11,7 @@
 --        notice, this list of conditions and the following disclaimer in   --
 --        the documentation and/or other materials provided with the        --
 --        distribution.                                                     --
---     3. Neither the name of STMicroelectronics nor the names of its       --
+--     3. Neither the name of the copyright holder nor the names of its     --
 --        contributors may be used to endorse or promote products derived   --
 --        from this software without specific prior written permission.     --
 --                                                                          --
@@ -27,48 +27,33 @@
 --   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  --
 --   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   --
 --                                                                          --
---                                                                          --
---  This file is based on:                                                  --
---                                                                          --
---   @file    fonts.h                                                       --
---   @author  MCD Application Team                                          --
---   @version V1.1.0                                                        --
---   @date    19-June-2014                                                  --
---   @brief   Header for fonts.c file.                                      --
---                                                                          --
---   COPYRIGHT(c) 2014 STMicroelectronics                                   --
 ------------------------------------------------------------------------------
 
-with Beta_Types; use Beta_Types;
+with STM32.Board;     use STM32.Board;
+with HAL.Touch_Panel;
 
-package BMP_Fonts is
+package body Screen_Interface is
 
-   type BMP_Font is (Font8x8, Font12x12, Font16x24);
+   -------------------------
+   -- Current_Touch_State --
+   -------------------------
 
-   function Data
-     (Font          : BMP_Font;
-      C             : Character;
-      Height_Offset : Natural)
-      return UInt16 with Inline;
-   --  Provides the numeric data values representing individual characters. For
-   --  the given font and character within that font, returns the numeric value
-   --  representing the bits at the Height_Offset within the representation.
+   function Current_Touch_State return Touch_State is
+      TS    : Touch_State;
+      ST_TS : constant HAL.Touch_Panel.TP_State :=
+                Touch_Panel.Get_All_Touch_Points;
+   begin
+      TS.Touch_Detected := ST_TS'Length > 0;
 
-   function Mask (Font : BMP_Font; Width_Offset : Natural) return UInt16
-     with Inline;
-   --  Provides the mask value used to test individual bits in the data
-   --  values representing individual characters. For example, to see if bit W
-   --  within the bits representing Char at height H is set, you would do the
-   --  following:
-   --
-   --       if (Data (Font, Char, H) and Mask (Font, W)) /= 0 then
+      if TS.Touch_Detected then
+         TS.X := ST_TS (1).X;
+         TS.Y := ST_TS (1).Y;
+      else
+         TS.X := 0;
+         TS.Y := 0;
+      end if;
 
-   function Char_Height (Font : BMP_Font) return Natural with Inline;
-   --  Returns the height of any individual character in the specified font, in
-   --  terms of pixels .
+      return TS;
+   end Current_Touch_State;
 
-   function Char_Width (Font : BMP_Font) return Natural with Inline;
-   --  Returns the width of any individual character in the specified font, in
-   --  terms of pixels .
-
-end BMP_Fonts;
+end Screen_Interface;

@@ -17,5 +17,4 @@ gnat_arm_elf = "^12"
 hal_embedded = "1.0.0"
 stm32_drivers = "1.0.0"
 stm32_boards = "1.0.0"
-#stm32_svd = "1.0.0"
 

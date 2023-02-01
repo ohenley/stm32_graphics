@@ -39,11 +39,9 @@
 --   COPYRIGHT(c) 2014 STMicroelectronics                                   --
 ------------------------------------------------------------------------------
 
-with Interfaces;
-
 package body BMP_Fonts is
 
-   BMP_Font16x24 : constant array (0 .. 2279) of BT.Uint16 :=
+   BMP_Font16x24 : constant array (0 .. 2279) of UInt16 :=
      (16#0000#,
       16#0000#,
       16#0000#,
@@ -2325,7 +2323,7 @@ package body BMP_Fonts is
       16#0000#,
       16#0000#);
 
-   BMP_Font12x12 : constant array (0 .. 1151) of BT.Uint16 :=
+   BMP_Font12x12 : constant array (0 .. 1151) of UInt16 :=
      (16#0000#,
       16#0000#,
       16#0000#,
@@ -3479,7 +3477,7 @@ package body BMP_Fonts is
       16#0000#,
       16#0000#);
 
-   BMP_Font8x8 : constant array (0 .. 767) of BT.Uint8 :=
+   BMP_Font8x8 : constant array (0 .. 767) of UInt8 :=
      (16#00#,
       16#00#,
       16#00#,
@@ -4253,8 +4251,7 @@ package body BMP_Fonts is
    -- Mask --
    ----------
 
-   function Mask (Font : BMP_Font; Width_Offset : Natural) return BT.Uint16 is
-      use Interfaces;
+   function Mask (Font : BMP_Font; Width_Offset : Natural) return UInt16 is
    begin
       case Font is
          when Font8x8 =>
@@ -4273,7 +4270,7 @@ package body BMP_Fonts is
    function Data
      (Font          : BMP_Font;
       C             : Character;
-      Height_Offset : Natural) return BT.Uint16
+      Height_Offset : Natural) return UInt16
    is
       Char_Num   : constant Natural := Character'Pos (C);
       Char_Index : constant Natural := Char_Height (Font) *
@@ -4283,7 +4280,7 @@ package body BMP_Fonts is
    begin
       case Font is
          when Font8x8 =>
-            return BT.Uint16 (BMP_Font8x8 (Char_Index + Height_Offset));
+            return UInt16 (BMP_Font8x8 (Char_Index + Height_Offset));
          when Font12x12 =>
             return BMP_Font12x12 (Char_Index + Height_Offset);
          when Font16x24 =>
