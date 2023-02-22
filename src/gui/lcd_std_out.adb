@@ -133,7 +133,7 @@ package body LCD_Std_Out is
    begin
       Display.Set_Orientation (To);
       Recompute_Screen_Dimensions (Current_Font);
-      Clear_Screen;
+      --Clear_Screen;
    end Set_Orientation;
 
    ------------------

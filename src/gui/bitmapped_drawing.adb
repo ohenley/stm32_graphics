@@ -34,6 +34,31 @@ with Bitmap_Color_Conversion; use Bitmap_Color_Conversion;
 package body Bitmapped_Drawing is
 
    ---------------
+   -- Draw_Texture --
+   ---------------
+
+   procedure Draw_Texture
+     (Buffer     : in out Bitmap_Buffer'Class;
+      Start      : Point;
+      Tex        : Texture;
+      Foreground : Bitmap_Color;
+      Background : Bitmap_Color)
+   is
+   begin
+      for H in 0 .. Textures.Texture_Height - 1 loop
+         for W in 0 .. Textures.Texture_Width - 1 loop
+            if Tex(H)(W) /= 0 then
+               Buffer.Set_Source (Foreground);
+               Buffer.Set_Pixel ((Start.X + W, Start.Y + H));
+            else
+               Buffer.Set_Source (Background);
+               Buffer.Set_Pixel ((Start.X + W, Start.Y + H));
+            end if;
+         end loop;
+      end loop;
+   end Draw_Texture;
+
+   ---------------
    -- Draw_Char --
    ---------------
 

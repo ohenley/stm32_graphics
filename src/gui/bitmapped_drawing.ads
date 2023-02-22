@@ -35,10 +35,18 @@
 with BMP_Fonts;     use BMP_Fonts;
 with Hershey_Fonts; use Hershey_Fonts;
 with HAL.Bitmap;    use HAL.Bitmap;
+with Textures;      use Textures;
 
 with Beta_Types; use Beta_Types;
 
 package Bitmapped_Drawing is
+
+   procedure Draw_Texture
+     (Buffer     : in out Bitmap_Buffer'Class;
+      Start      : Point;
+      Tex        : Texture;
+      Foreground : Bitmap_Color;
+      Background : Bitmap_Color);
 
    procedure Draw_Char
      (Buffer     : in out Bitmap_Buffer'Class;
